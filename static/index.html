@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ollama Chat Interface</title>
+  <title>Kodah</title>
   <link rel="stylesheet" href="/static/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+
   <!-- Load highlight.js first -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -22,7 +24,7 @@
   <!-- Authentication UI -->
   <div class="auth-container" id="authContainer">
     <div class="auth-form">
-      <h2>Login</h2>
+      <h2></h2>
       <div class="auth-input-group">
         <input type="text" id="username" placeholder="Username" />
       </div>
@@ -30,11 +32,11 @@
         <input type="password" id="password" placeholder="Password" />
       </div>
       <div class="auth-input-group">
-        <button onclick="login()">Login</button>
-      </div>
-      <div class="auth-input-group">
-        <button onclick="showRegister()" class="secondary-button">Register</button>
-      </div>
+        <button onclick="window.app.login()">Login</button>
+    </div>
+    <div class="auth-input-group">
+        <button onclick="window.app.showRegister()" class="secondary-button">Register</button>
+    </div>
     </div>
   </div>
 
@@ -42,7 +44,8 @@
   <div class="app-container" id="appContainer">
     <div class="sidebar" id="sidebar">
       <h2>Chats</h2>
-      <div id="chatList"></div>
+      <div id="chatList">
+      </div>
     </div>
     <div class="main-content">
       <div class="chat-container" id="chatContainer">
@@ -54,17 +57,27 @@
             </select>
           </div>
           <div class="chat-controls">
-            <button onclick="newChat()" class="primary-button">New Chat</button>
-            <button onclick="exportChat()" class="secondary-button">Export Chat</button>
-            <button onclick="logout()" class="logout-button">Logout</button>
-          </div>
+            <button onclick="window.app.newChat()" class="primary-button"><i class="fa-solid fa-comment-medical"></i></button>
+            <button onclick="window.app.exportChat()" class="primary-button"><i class="fa-solid fa-download"></i></button>
+            <button id="preferencesButton" class="primary-button" title="Preferences"><i class="fa-solid fa-gear"></i></button>
+            <button onclick="window.app.logout()" class="primary-button"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+            
+        </div>
         </div>
         <div id="chatMessages"></div>
         <!-- Chat input area -->
         <div class="chat-input-container" id="chatInputContainer">
-          <input type="text" id="messageInput" placeholder="Type your message..." />
-          <button onclick="sendMessage()">Send</button>
-        </div>
+          <div class="chat-input-wrapper">
+            <textarea id="messageInput" placeholder="Type your message..." rows="1"></textarea>
+            <button onclick="window.app.sendMessage()" class="send-button" aria-label="Send">
+              <i class="fa fa-arrow-up"></i>
+            </button>
+            <button onclick="document.getElementById('fileInput').click()" class="attach-button" aria-label="Attach">
+              <i class="fa fa-plus"></i>
+            </button>
+            <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload(event)" />
+          </div>
+        </div>        
       </div>
     </div>
   </div>
